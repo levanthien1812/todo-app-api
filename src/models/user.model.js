@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const httpStatus = require('http-status');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
+const ApiError = require('../utils/ApiError');
+const { ERROR_CODE, ERROR_MESSAGE } = require('../config/errorCode');
 
 const userSchema = mongoose.Schema(
   {
@@ -19,7 +22,7 @@ const userSchema = mongoose.Schema(
       lowercase: true,
       validate(value) {
         if (!validator.isEmail(value)) {
-          throw new Error('Invalid email');
+          throw new ApiError(httpStatus.BAD_REQUEST, ERROR_MESSAGE[ERROR_CODE.ERR001], ERROR_CODE.ERR001);
         }
       },
     },
@@ -30,7 +33,7 @@ const userSchema = mongoose.Schema(
       minlength: 8,
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error('Password must contain at least one letter and one number');
+          throw new ApiError(httpStatus.BAD_REQUEST, ERROR_MESSAGE[ERROR_CODE.ERR002], ERROR_CODE.ERR002);
         }
       },
       private: true, // used by the toJSON plugin
