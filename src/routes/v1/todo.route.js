@@ -6,11 +6,15 @@ const auth = require('../../middlewares/auth');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .post(auth('createTodo'), validate(todoValidation.createTodo), todoController.createTodo)
-  .get(auth('getTodos'), todoController.getTodos);
+// router
+//   .route('/')
+//   .post(auth('createTodo'), validate(todoValidation.createTodo), todoController.createTodo)
+//   .get(auth('getTodos'), todoController.getTodos);
 
-router.route('/:id').get(auth('getTodo'), todoController.getTodo);
+// router.route('/:id').get(auth('getTodo'), todoController.getTodo);
+
+router.route('/').post(todoController.createTodo).get(todoController.getTodos);
+
+router.route('/:id').get(todoController.getTodo);
 
 module.exports = router;
