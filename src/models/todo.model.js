@@ -22,6 +22,7 @@ const TodoSchema = mongoose.Schema({
 
 const Todo = mongoose.model('Todo', TodoSchema);
 
+SubtaskSchema.plugin(toJSON);
 TodoSchema.plugin(toJSON);
 
 module.exports = Todo;

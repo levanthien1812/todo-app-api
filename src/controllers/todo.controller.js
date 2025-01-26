@@ -17,8 +17,20 @@ const getTodo = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(todo);
 });
 
+const updateTodo = catchAsync(async (req, res, next) => {
+  const updatedTodo = await todoService.updateTodo(req.params.id, req.body);
+  return res.status(httpStatus.CREATED).send({ todo: updatedTodo });
+});
+
+const deleteTodo = catchAsync(async (req, res, next) => {
+  const deletedTodo = await todoService.deleteTodo(req.params.id);
+  return res.status(httpStatus.OK).send({ todo: deletedTodo });
+});
+
 module.exports = {
   createTodo,
   getTodos,
   getTodo,
+  updateTodo,
+  deleteTodo,
 };
