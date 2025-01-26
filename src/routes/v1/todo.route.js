@@ -15,6 +15,6 @@ const router = express.Router();
 
 router.route('/').post(todoController.createTodo).get(todoController.getTodos);
 
-router.route('/:id').get(todoController.getTodo);
+router.route('/:id').get(todoController.getTodo).patch(todoController.updateTodo).delete(todoController.deleteTodo);
 
 module.exports = router;
