@@ -5,8 +5,8 @@ const createTodo = async (todoBody) => {
   return todo;
 };
 
-const getTodos = async () => {
-  const todos = await Todo.find();
+const getTodos = async (filter, options) => {
+  const { results: todos, ...rest } = await Todo.paginate(filter, options);
   return todos;
 };
 

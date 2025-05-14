@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { STATUS_VALUE } = require('../config/todo');
-const { toJSON } = require('./plugins');
+const { toJSON, paginate } = require('./plugins');
 
 const SubtaskSchema = mongoose.Schema({
   title: { type: String, required: true },
@@ -20,9 +20,10 @@ const TodoSchema = mongoose.Schema({
   tags: { type: [String], default: [], required: false },
 });
 
-const Todo = mongoose.model('Todo', TodoSchema);
-
-SubtaskSchema.plugin(toJSON);
 TodoSchema.plugin(toJSON);
+TodoSchema.plugin(paginate);
+SubtaskSchema.plugin(toJSON);
+
+const Todo = mongoose.model('Todo', TodoSchema);
 
 module.exports = Todo;
